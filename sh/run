@@ -1,0 +1,7 @@
+#!/bin/bash
+
+mvn dependency:build-classpath -Dmdep.outputFile=classpath -quiet
+deps=`cat classpath`
+rm classpath
+
+java -cp target/classes:${deps} jp.mzw.l5.pgcon7.CLI ${@}
