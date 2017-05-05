@@ -40,7 +40,7 @@ public class Solver {
 		}
 		switch (this.lines.size()) {
 		case 0:
-			throw new IllegalStateException("Not found both N and {}");
+			throw new IllegalStateException("Not found N");
 		case 1:
 			throw new IllegalStateException("Not found {}");
 		case 2:
@@ -64,9 +64,13 @@ public class Solver {
 	}
 
 	public int[] solve() {
+		if (this.sequence == null || this.n < 1) {
+			throw new IllegalStateException("Solve before read and parse");
+		}
 		int[] sequence = this.sequence;
-		int[] calculated = new int[this.n];
-		while (true) {
+		boolean fixed = false;
+		while (!fixed) {
+			int[] calculated = new int[this.n];
 			for (int i = 0; i < sequence.length; i++) {
 				int number = sequence[i];
 				int frequency = 0;
@@ -77,18 +81,14 @@ public class Solver {
 				}
 				calculated[i] = frequency;
 			}
-			boolean fixed = true;
+			fixed = true;
 			for (int i = 0; i < sequence.length; i++) {
 				if (sequence[i] != calculated[i]) {
 					fixed = false;
 					break;
 				}
 			}
-			if (fixed) {
-				break;
-			}
 			sequence = calculated;
-			calculated = new int[this.n];
 		}
 		return sequence;
 	}
