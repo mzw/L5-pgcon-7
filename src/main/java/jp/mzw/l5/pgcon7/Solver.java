@@ -68,8 +68,7 @@ public class Solver {
 			throw new IllegalStateException("Solve before read and parse");
 		}
 		int[] sequence = this.sequence;
-		boolean fixed = false;
-		while (!fixed) {
+		while (true) {
 			int[] calculated = new int[this.n];
 			for (int i = 0; i < sequence.length; i++) {
 				int number = sequence[i];
@@ -81,12 +80,15 @@ public class Solver {
 				}
 				calculated[i] = frequency;
 			}
-			fixed = true;
+			boolean fixed = true;
 			for (int i = 0; i < sequence.length; i++) {
 				if (sequence[i] != calculated[i]) {
 					fixed = false;
 					break;
 				}
+			}
+			if (fixed) {
+				break;
 			}
 			sequence = calculated;
 		}
